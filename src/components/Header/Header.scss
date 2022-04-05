@@ -1,0 +1,23 @@
+header {
+    font-family: Avenir;
+    font-size: 30px;
+    color: #fff;
+    height: 60px;
+    background-color: #1C6455;
+    text-align: start;
+    width: 100%;
+}
+
+.text-box {
+    padding-left: 20px;
+    height: 100%;
+    text-align: start;
+     
+
+    span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+    }
+}
+
