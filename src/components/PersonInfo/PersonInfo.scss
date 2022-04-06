@@ -1,8 +1,13 @@
 $width: 200px;
 
-@mixin picture($width, $offset) {
+@mixin square($width, $offset) {
     width: $width + $offset;
     height: $width + $offset;
+
+}
+
+@mixin picture($width, $offset) {
+    @include square($width, $offset);
     border-radius: ($width + $offset) / 2;
     z-index: 1;
 }
@@ -13,17 +18,27 @@ $width: 200px;
     justify-content: center;
 }
 
-img {
-    @include picture($width, 0px);
-}
-
 .person-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     width: 100%;
 
+    .profile-picture {
+        @include picture($width, 0px);
+    }
+
+    .inner-border {
+        @include picture($width, 6px);
+        @include center;
+        background-color: #fff;
+    }
+    
+    .outer-border {
+        @include picture($width, 12px);
+        @include center;
+        background-color: #1C6455;
+    }
+
     .details-box {
+        width: 100%;
 
         .name-box {
             background-color: #1C6455;
@@ -33,6 +48,7 @@ img {
             padding-left: $width / 2 + 30px;
             border-radius: 0 $width / 6 $width / 6 0;
             width: 100%;
+            box-sizing: border-box;
             display: flex;
             align-items: center;
             
@@ -46,24 +62,18 @@ img {
         .detail {
             display: flex;
             flex-direction: row;
+            margin-right: 20px;
+            padding-top: 10px;
 
-            img {
-                @include picture(30px, 0px)
+            .icon {
+                @include square(30px, 0px);
+                margin-right: 5px;
             }
         }
     }
-
-
 }
 
-.inner-border {
-    @include picture($width, 6px);
-    @include center;
-    background-color: #fff;
-}
-
-.outer-border {
-    @include picture($width, 12px);
-    @include center;
-    background-color: #1C6455;
+.short-description {
+    padding-top: 10px;
+    word-wrap: normal;
 }
