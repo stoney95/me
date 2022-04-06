@@ -5,7 +5,7 @@ import "./Header.scss";
 function HeaderView() {
     return <header>
         <div className="text-box">
-            <span>This is me</span>
+            <span>🙋‍♂️ This is me</span>
         </div>
     </header>
 }
