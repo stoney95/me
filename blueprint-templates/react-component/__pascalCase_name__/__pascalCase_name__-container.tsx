@@ -1,8 +1,8 @@
-import React from 'react';
+import {FC} from 'react';
 
 import {default as {{pascalCase name}}View} from "./{{pascalCase name}}-view";
 
-function {{pascalCase name}}Container() {
+const {{pascalCase name}}Container: FC = () => {
     return (<{{pascalCase name}}View />)
 }
 

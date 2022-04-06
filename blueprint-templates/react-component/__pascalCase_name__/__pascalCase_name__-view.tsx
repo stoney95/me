@@ -1,7 +1,7 @@
-import React from "react";
+import {FC} from "react";
 
 import "./{{pascalCase name}}.scss";
 
-function {{pascalCase name}}View() {return (<></>)}
+const {{pascalCase name}}View: FC = () => {return (<></>)}
 
 export default {{pascalCase name}}View;
