@@ -1,0 +1,19 @@
+.skill-container {
+    position: absolute;
+    max-width: fit-content;
+    padding: 3px;
+    transform: translateX(-50%);
+}
+
+.skill {
+    background-color: #ccc;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+    margin: 3px;
+}
+
+.skill:hover {
+    background-color: blue;
+    color: white;
+}

@@ -4,38 +4,44 @@ import './App.scss';
 import Header from '../Header'
 import PersonInfo from '../PersonInfo'
 import Container from '../Container'
-import SkillsPlane from '../SkillsPlane'
+import SkillsPlane from '../SkillsPlane';
+import {Area, Level} from '../SkillsPlane/types'
 
 const skills = [
   {
-    area: "Machine Learning",
+    area: Area.MACHINE_LEARNING,
     name: "keras",
-    score: 2.5
+    level: Level.USED_ONCE
   },
   {
-    area: "Machine Learning",
+    area: Area.MACHINE_LEARNING,
     name: "sklearn",
-    score: 3.5
+    level: Level.USED_FREQUENTLY
   },
   {
-    area: "Data Engineering",
+    area: Area.DATA_ENGINEERING,
     name: "pyspark",
-    score: 3.8
+    level: Level.USED_FREQUENTLY
   },
   {
-    area: "MLOps",
+    area: Area.DATA_ENGINEERING,
+    name: "kafka",
+    level: Level.INTERACTED_WITH
+  },
+  {
+    area: Area.MLOPS,
     name: "AzureML",
-    score: 4.6
+    level: Level.STILL_LEARNING
   },
   {
-    area: "Data Visualization",
+    area: Area.DATA_VISUALIZATION,
     name: "plotly",
-    score: 4
+    level: Level.USED_EVERYDAY
   },
   {
-    area: "MLOps",
+    area: Area.MLOPS,
     name: "python",
-    score: 5
+    level: Level.STILL_LEARNING
   },
 ]
 

@@ -1,19 +1,15 @@
 .plane{
     width: 100%;
     height: 300px;
-    border-left: 3px solid #ccc;
+    // border-left: 3px solid #ccc;
     border-bottom: 3px solid #ccc;
     position: relative;
+    // padding-left: 40px;
 }
 
-.skill-container {
+.x-axis-lable {
     position: absolute;
-    max-width: fit-content;
-}
-
-.skill {
-    background-color: #ccc;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 15px;
+    bottom: 0px;
+    font-size: 14px;
+    transform: translate(-50%, 100%)
 }

@@ -1,34 +1,48 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 
 import "./SkillsPlane.scss";
-
-
-type Skill = {
-    style: {
-        top: string;
-        left: string;
-    },
-    name: string;
-}
+import SkillView from "./Skill"
+import {Skill} from "./Skill/types"
+import {Area, Level} from "./types"
 
 interface ISkillPlaneView {
-    skills: Array<Skill>;
+    skills: Map<number, Map<number, Array<string>>>;
 }
 
 
-const Skill: FC<Skill> = ({style, name}) => {
-    return (
-        <div className="skill-container d-flex align-items-center justify-content-center" style={style}>
-                <span className="skill">{name}</span>
+
+const generateRow = (row: number, columns: Map<number, Array<string>> | undefined) => {
+    if (columns === undefined) {
+        console.log("no columns")
+        return
+    }
+
+    const keys = Array.from(columns.keys())
+
+    const columnElems = keys.map(col => {
+        return <div style={{gridRow: row + 1, gridColumn: col + 1}}>
+            {columns.get(col)?.map(skillName => {
+                return <SkillView name={skillName}/>
+            })}
         </div>
-    )
+    })
+
+    return <>{columnElems}</>
 }
+
 
 
 const SkillsPlaneView: FC<ISkillPlaneView> = ({skills}) => {
+    const rowValues = Array.from(skills.keys())
+
+    const gridStyle = {
+        display: "grid",
+        gridGap: "10px",
+    }
+
     return (
-        <div className="plane">
-            {skills.map(sk => Skill(sk))}
+        <div className="plane" style={gridStyle}>
+            {rowValues.map(row => generateRow(row, skills.get(row)))}
         </div>
     )
 }
