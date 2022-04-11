@@ -34,6 +34,11 @@ const skills = [
   },
   {
     areas: [Area.DATA_ENGINEERING],
+    name: "Databricks",
+    level: Level.INTERACTED_WITH
+  },
+  {
+    areas: [Area.DATA_ENGINEERING],
     name: "kafka",
     level: Level.INTERACTED_WITH
   },
@@ -86,6 +91,11 @@ const skills = [
     areas: [Area.MLOPS],
     name: "AzureML",
     level: Level.USED_EVERYDAY
+  },
+  {
+    areas: [Area.MLOPS],
+    name: "MLFlow",
+    level: Level.INTERACTED_WITH
   },
   {
     areas: [Area.MLOPS],

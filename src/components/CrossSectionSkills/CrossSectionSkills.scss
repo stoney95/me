@@ -1,0 +1,59 @@
+.cross-section-skills {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.cross-section-skill-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.cross-section-skill-title {
+    text-align: start;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.cross-section-skill-table {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+}
+
+.cross-section-skill-name {
+    grid-column: 1;
+    text-align: start;
+}
+
+.cross-section-skill-level {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+}
+
+.cross-section-skill-level-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+$indicator-size: 14px;
+
+.cross-section-skill-level-indicator {
+    width: $indicator-size;
+    height: $indicator-size;
+    border-radius: $indicator-size / 2;
+    border: 2px solid #ccc;
+    margin-right: 5px;
+}
+
+.indicator-active {
+    background-color: #1C6455;
+}
+
+.indicator-passive {
+    background-color: #EBEBEB;
+}
