@@ -3,7 +3,7 @@ export enum Area {
     MACHINE_LEARNING = "Machine Learning",
     MLOPS = "MLOps",
     DATA_VISUALIZATION = "Data Visualization",
-    AUTOMATION = "Automation",
+    // AUTOMATION = "Automation",
 }
 
 export enum Level {
@@ -15,7 +15,7 @@ export enum Level {
 }
 
 export type Skill = {
-    area: Area;
+    areas: Array<Area>;
     level: Level;
     name: string;
 }
@@ -23,7 +23,28 @@ export type Skill = {
 export type TransformedSkill = {
     position: {
         row: number;
-        col: number;
-    }
+        col: {
+            start: number;
+            end: number;
+        }
+    };
     name: string;
+}
+
+export type InnerTableRow = {
+    columnRange: {
+        start: number;
+        end: number;
+    };
+    row: number;
+    elements: Array<string>;
+}
+
+export type TableRow = {
+    innerRows: Array<InnerTableRow>;
+    rowNumber: number;
+}
+
+export type TableData = {
+    rows: Array<TableRow>;
 }

@@ -1,10 +1,12 @@
 .plane{
     width: 100%;
-    height: 300px;
-    // border-left: 3px solid #ccc;
-    border-bottom: 3px solid #ccc;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    // background-color: rgba(28, 99, 85, 0.05);
+    // box-shadow: 0px 0px 15px 2px black;
+    // border: 1px solid;
     position: relative;
-    // padding-left: 40px;
+    grid-auto-rows: 1fr;
 }
 
 .x-axis-lable {
@@ -13,3 +15,55 @@
     font-size: 14px;
     transform: translate(-50%, 100%)
 }
+
+.y-axis-lable {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    font-size: 14px;
+    transform: translate(-100%, -50%)
+}
+
+.level-description {
+    text-align: start;
+    font-size: 10px;
+    width: 30%;
+}
+
+.inner-row {
+    display: grid;
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.inner-row:hover {
+    // box-shadow: 0px 0px 10px 10px white;
+    // box-shadow: 0px 0px 5px rgb(198, 255, 244);
+}
+
+.top-to-bottom {
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+}
+
+.top-to-bottom:hover {
+    border-left: 3px solid rgba(28, 99, 85, 1);
+    border-right: 3px solid rgba(28, 99, 85, 1);
+}
+
+// .top-to-bottom:hover {
+//     border-left-width: 3px;
+//     border-left-style: solid;
+//     // -webkit-border-image: 
+//     //   -webkit-gradient(linear, 0 0, 0 100%, from(black), to(rgba(0, 0, 0, 0))) 1 100%;
+//     // -webkit-border-image: 
+//     //   -webkit-linear-gradient(rgba(0,0,0,0), black, rgba(0, 0, 0, 0)) 1 100%;
+//     // -moz-border-image:
+//     //   -moz-linear-gradient(rgba(0,0,0,0), black, rgba(0, 0, 0, 0)) 1 100%;    
+//     // -o-border-image:
+//     //   -o-linear-gradient(rgba(0,0,0,0), black, rgba(0, 0, 0, 0)) 1 100%;
+//     border-image:
+//       linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), black, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 1 100%;
+// }
+

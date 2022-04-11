@@ -2,49 +2,63 @@ import {FC, useEffect} from "react";
 
 import "./SkillsPlane.scss";
 import SkillView from "./Skill"
-import {Skill} from "./Skill/types"
-import {Area, Level} from "./types"
+import {TableData, TableRow, Area, Level} from "./types"
 
 interface ISkillPlaneView {
-    skills: Map<number, Map<number, Array<string>>>;
+    skills: TableData;
+    areas: Array<Area>;
+    levels: Array<Level>;
 }
 
 
-
-const generateRow = (row: number, columns: Map<number, Array<string>> | undefined) => {
-    if (columns === undefined) {
-        console.log("no columns")
-        return
-    }
-
-    const keys = Array.from(columns.keys())
-
-    const columnElems = keys.map(col => {
-        return <div style={{gridRow: row + 1, gridColumn: col + 1}}>
-            {columns.get(col)?.map(skillName => {
-                return <SkillView name={skillName}/>
-            })}
+const generateRow = (row: TableRow, numColumns: number, numRows: number) => {
+    return <div className="inner-row top-to-bottom" style={{gridTemplateColumns: `repeat(${numColumns}, 1fr)`}}>
+        {
+            row.innerRows.map(row => {
+                return <div 
+                className="skill-area" 
+                style={{
+                    gridColumn: `${row.columnRange.start} / ${row.columnRange.end}`, 
+                    gridRow: row.row
+                }}>
+                    {row.elements.map(element => {
+                        return <SkillView name={element} column={row.columnRange}/>
+                    })}
+                </div>
+            })
+        }
+        <div className="y-axis-lable">
+            {numRows - row.rowNumber}
         </div>
-    })
-
-    return <>{columnElems}</>
+    </div>
 }
 
 
 
-const SkillsPlaneView: FC<ISkillPlaneView> = ({skills}) => {
-    const rowValues = Array.from(skills.keys())
+const SkillsPlaneView: FC<ISkillPlaneView> = ({skills, areas, levels}) => {
 
     const gridStyle = {
         display: "grid",
         gridGap: "10px",
     }
 
-    return (
+    const levelDescription = levels.map((level, index) => {
+        return `${index + 1}=${level}`
+    }).join(", ")
+
+    return (<>
+        <div className="level-description">{levelDescription}</div>
         <div className="plane" style={gridStyle}>
-            {rowValues.map(row => generateRow(row, skills.get(row)))}
+            {skills.rows.map(row => generateRow(row, areas.length, levels.length))}
         </div>
-    )
+        <div className="d-flex flex-row">
+            {areas.map(area => {
+                return <div className="d-flex justify-content-center align-items-center w-100">
+                    <span>{area}</span>
+                </div>
+            })}
+        </div>
+    </>)
 }
 
 export default SkillsPlaneView;

@@ -9,37 +9,37 @@ import {Area, Level} from '../SkillsPlane/types'
 
 const skills = [
   {
-    area: Area.MACHINE_LEARNING,
+    areas: [Area.MACHINE_LEARNING],
     name: "keras",
     level: Level.USED_ONCE
   },
   {
-    area: Area.MACHINE_LEARNING,
+    areas: [Area.MACHINE_LEARNING],
     name: "sklearn",
     level: Level.USED_FREQUENTLY
   },
   {
-    area: Area.DATA_ENGINEERING,
+    areas: [Area.DATA_ENGINEERING],
     name: "pyspark",
     level: Level.USED_FREQUENTLY
   },
   {
-    area: Area.DATA_ENGINEERING,
+    areas: [Area.DATA_ENGINEERING],
     name: "kafka",
     level: Level.INTERACTED_WITH
   },
   {
-    area: Area.MLOPS,
+    areas: [Area.MLOPS],
     name: "AzureML",
     level: Level.STILL_LEARNING
   },
   {
-    area: Area.DATA_VISUALIZATION,
+    areas: [Area.DATA_VISUALIZATION],
     name: "plotly",
     level: Level.USED_EVERYDAY
   },
   {
-    area: Area.MLOPS,
+    areas: [Area.DATA_ENGINEERING, Area.MACHINE_LEARNING, Area.MLOPS],
     name: "python",
     level: Level.STILL_LEARNING
   },
