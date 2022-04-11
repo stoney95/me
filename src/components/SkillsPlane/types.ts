@@ -3,7 +3,6 @@ export enum Area {
     MACHINE_LEARNING = "Machine Learning",
     MLOPS = "MLOps",
     DATA_VISUALIZATION = "Data Visualization",
-    // AUTOMATION = "Automation",
 }
 
 export enum Level {

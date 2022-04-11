@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import {SkillListProvider} from './context/data/skills'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SkillListProvider>
+      <App />
+    </SkillListProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

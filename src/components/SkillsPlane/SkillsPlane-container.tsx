@@ -1,16 +1,13 @@
-import {FC} from 'react';
+import {FC, useContext} from 'react';
 
 import {default as SkillsPlaneView} from "./SkillsPlane-view";
 import {Skill, Area, Level, TransformedSkill, TableData, TableRow, InnerTableRow} from "./types"
 
-interface ISkillPlane {
-    skills: Array<Skill>;
-}
+import { SkillContext } from "../../context/data/skills"
 
 
-
-
-const SkillsPlaneContainer: FC<ISkillPlane> = ({skills}) => {
+const SkillsPlaneContainer: FC = () => {
+    const skills = useContext(SkillContext)
     const areas = Object.values(Area);
     const levels = Object.values(Level);
 
@@ -33,14 +30,14 @@ const SkillsPlaneContainer: FC<ISkillPlane> = ({skills}) => {
     function sortSkill(a: TransformedSkill, b: TransformedSkill): number {
         const rowDif = a.position.row - b.position.row;
         if ( rowDif !== 0 ) return rowDif;
+        
+        const startDif = a.position.col.start - b.position.col.start;
+        if ( startDif !== 0 ) return startDif;
 
         const aRange = a.position.col.end - a.position.col.start;
         const bRange = b.position.col.end - b.position.col.start;
         const rangeDif = bRange - aRange;
         if ( rangeDif !== 0 ) return rangeDif;
-
-        const startDif = a.position.col.start - b.position.col.start;
-        if ( startDif !== 0 ) return startDif;
 
         return 0
     }
@@ -69,6 +66,13 @@ const SkillsPlaneContainer: FC<ISkillPlane> = ({skills}) => {
             return startEqual && endEqual
         }
 
+        const intersect = (skillA: TransformedSkill, skillB: TransformedSkill) => {
+            const aLeftOfB = skillA.position.col.end <= skillB.position.col.start;
+            const aRightOfB = skillA.position.col.start >= skillB.position.col.end;
+
+            return ! (aLeftOfB || aRightOfB)
+        }
+
         skills.slice(1).forEach(skill => {
             if (!(skill.position.row === currentTableRow.rowNumber)) {
                 result.rows.push(currentTableRow);
@@ -77,10 +81,10 @@ const SkillsPlaneContainer: FC<ISkillPlane> = ({skills}) => {
                 elementInRow = false;
             }
 
-            if (positionEqual(skill, previousSkill)) {
+            if ( elementInRow && positionEqual(skill, previousSkill)) {
                 currentInnerTableRow.elements.push(skill.name);
             } else {
-                if ( elementInRow && skill.position.col.start < previousSkill.position.col.end ) currentInnerRow++;
+                if ( elementInRow && intersect(skill, previousSkill) ) currentInnerRow++;
                 var newRowNumber = currentInnerRow;
 
                 currentInnerTableRow = {
@@ -89,7 +93,10 @@ const SkillsPlaneContainer: FC<ISkillPlane> = ({skills}) => {
                     row: newRowNumber,
                 }
                 currentTableRow.innerRows.push(currentInnerTableRow);
+                elementInRow = true;
             }
+
+            previousSkill = skill;
         })
         result.rows.push(currentTableRow);
 
