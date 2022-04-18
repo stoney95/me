@@ -8,6 +8,7 @@ import Content from '../Content'
 import TiteledContainer from '../TiteledContainer'
 import SkillsPlane from '../SkillsPlane';
 import CrossSectionSkills from '../CrossSectionSkills'
+import WorkExperience from '../WorkExperience'
 
 
 const skills = [
@@ -53,6 +54,9 @@ function App() {
         <TiteledContainer title="Cross Section Skills">
           <CrossSectionSkills skills={skills}/>
         </TiteledContainer>
+        <Container>
+          <WorkExperience />
+        </Container>
       </Content>
     </div>
   );

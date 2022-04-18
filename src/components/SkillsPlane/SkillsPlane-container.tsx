@@ -7,7 +7,7 @@ import { SkillContext } from "../../context/data/skills"
 
 
 const SkillsPlaneContainer: FC = () => {
-    const skills = useContext(SkillContext)
+    const skills = useContext(SkillContext);
     const areas = Object.values(Area);
     const levels = Object.values(Level);
 
