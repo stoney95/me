@@ -1,5 +1,5 @@
 import {createRef, FC} from 'react';
-import Arrow from './Arrow';
+import { ArrowContainerHandle } from './Arrow';
 import {ArrowRefs} from "./types"
 
 import {default as WorkExperienceView} from "./WorkExperience-view";
@@ -80,7 +80,7 @@ const WorkExperienceContainer: FC = () => {
         arrowRefs.set(project.projectProps.title, {
             source: createRef<HTMLDivElement>(),
             target: createRef<HTMLDivElement>(),
-            arrow: createRef<typeof Arrow>(),
+            arrow: createRef<ArrowContainerHandle>(),
         })
     )
 

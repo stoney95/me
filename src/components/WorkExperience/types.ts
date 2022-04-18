@@ -1,5 +1,5 @@
 import { RefObject } from "react";
-import Arrow from "./Arrow";
+import {ArrowContainerHandle} from "./Arrow";
 import {ProjectViewProps} from "./Project"
 
 
@@ -19,5 +19,5 @@ export type ProjectState = {
 export type ArrowRefs = {
     source: RefObject<HTMLDivElement>;
     target: RefObject<HTMLDivElement>;
-    arrow: RefObject<typeof Arrow>;
+    arrow: RefObject<ArrowContainerHandle>;
 }

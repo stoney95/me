@@ -1,15 +1,13 @@
-import React, { createRef, FC, RefObject, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
     DragDropContext,
-    Droppable,
-    Draggable,
     type DropResult,
 } from "react-beautiful-dnd";
 
 import Timeline from "./Timeline";
 import DraggableProjects from './DraggableProjects';
 import ExtendedProjects from './ExtendedProjects';
-import Arrow from './Arrow';
+import Arrow, {ArrowContainerHandle} from './Arrow';
 
 import {WorkExperience, ArrowRefs} from "./types"
 
@@ -67,6 +65,10 @@ const WorkExperienceView: FC<WorkExperienceProps> = ({projects: initialProjects,
         setExtendedProjects(newExtendedProjects);
     }
 
+    useEffect(() => {
+        arrowRefs.forEach((refs => refs.arrow.current?.updateArrow()))
+    }, [projects, extendedProjects])
+
     const projectPropsList = projects.map(project => project.projectProps)
     const extendedProjectPropsList = extendedProjects.map(project => project.projectProps)
 
@@ -80,7 +82,7 @@ const WorkExperienceView: FC<WorkExperienceProps> = ({projects: initialProjects,
             <Arrow 
                 source={refs.source}
                 target={refs.target}
-                // ref={refs.arrow}
+                ref={refs.arrow}
             />
         ))}
     </div>

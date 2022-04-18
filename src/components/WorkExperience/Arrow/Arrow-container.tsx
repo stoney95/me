@@ -8,7 +8,7 @@ interface ArrowContainerProps extends React.ClassAttributes<typeof ArrowContaine
     target: RefObject<HTMLElement>;
 }
 
-interface ArrowContainerHandle {
+export interface ArrowContainerHandle {
     updateArrow: () => void;
 }
 
