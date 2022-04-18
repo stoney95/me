@@ -29,7 +29,7 @@ const calculateControlPoints = ({absDx, absDy, dx, dy}: ArrowDeltas): BezierPoin
     if (dx < 0) [startPointX, endPointX] = [endPointX, startPointX];
     if (dy < 0) [startPointX, endPointX] = [endPointX, startPointX];
 
-    const fixedLineInflectionConstant = Math.min(100, absDy);
+    const fixedLineInflectionConstant = Math.min(50, absDy);
   
     const p1 = {
         x: startPointX,
@@ -61,7 +61,7 @@ const ArrowView: FC<ArrowViewProps> = ({startPoint, endPoint}) => {
         y: Math.min(startPoint.y, endPoint.y),
     };
 
-    const strokeWidth = 5;
+    const strokeWidth = 1;
 
     const canvasWidth = Math.abs(endPoint.x - startPoint.x) + strokeWidth * 2;
     const canvasHeight = Math.abs(endPoint.y - startPoint.y);

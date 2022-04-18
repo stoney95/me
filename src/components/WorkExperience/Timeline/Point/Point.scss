@@ -1,0 +1,39 @@
+$width: 12px;
+
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin circle($diameter) {
+    width: $diameter;
+    height: $diameter;
+    border-radius: $diameter / 2;
+}
+
+.timeline-point-container {
+    position: relative;
+    width: $width;
+    height: $width;
+}
+
+.outer-timeline-point {
+    $internalSize: $width;
+    @include center;
+    @include circle($internalSize);
+    background-color: white;
+    border: 1.5px solid black;
+}
+
+.inner-timeline-point {
+    $internalSize: $width - 6px;
+    @include center;
+    @include circle($internalSize);
+    background-color: black;
+}
+
+.big {
+    transform: scale(1.5)
+}
