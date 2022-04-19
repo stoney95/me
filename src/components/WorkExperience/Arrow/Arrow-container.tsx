@@ -1,10 +1,13 @@
 import React, {FC, RefObject, useEffect, useImperativeHandle, useLayoutEffect, useState} from 'react';
 import {default as ArrowView} from "./Arrow-view";
 import {setPointState} from "./types";
+import useResizeObserver from '@react-hook/resize-observer'
+import {Observer, type ObserverableDiv} from "../Project/ObserverableDiv";
+
 
 
 interface ArrowContainerProps extends React.ClassAttributes<typeof ArrowContainer>{
-    source: RefObject<HTMLElement>;
+    source: RefObject<ObserverableDiv>;
     target: RefObject<HTMLElement>;
 }
 
@@ -14,7 +17,7 @@ export interface ArrowContainerHandle {
 
 
 function updateArrow(
-    source: RefObject<HTMLElement>, 
+    source: RefObject<ObserverableDiv>, 
     target: RefObject<HTMLElement>, 
     setStartPoint: setPointState, 
     setEndPoint: setPointState,
@@ -47,6 +50,7 @@ const ArrowContainer: React.ForwardRefRenderFunction<ArrowContainerHandle, Arrow
     const [endPoint, setEndPoint] = useState({x: 0, y: 0});
 
     const _updateArrow = () => updateArrow(source, target, setStartPoint, setEndPoint)
+    Observer(source, _updateArrow)
 
     useImperativeHandle(ref, () => ({
         updateArrow: _updateArrow

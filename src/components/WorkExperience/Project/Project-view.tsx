@@ -1,6 +1,7 @@
 import {FC} from "react";
 
 import "./Project.scss";
+import ObserverableDiv from "./ObserverableDiv";
 
 interface MinimalProjectViewProps {
     scope: string;
@@ -16,7 +17,7 @@ interface ProjectViewProps extends MinimalProjectViewProps {
 const ExtendedProjectView: FC<ProjectViewProps> = ({title, description, scope, teamSize}, ref) => {
     return (<div className="d-flex flex-column">
         <div className="d-flex flex-row">
-            <div ref={ref} className="block"/>
+            <ObserverableDiv ref={ref}/>
             <div className="d-flex flex-column">
                 <div className="title">{title}</div>
                 <div className="d-flex flex-row">
@@ -31,7 +32,7 @@ const ExtendedProjectView: FC<ProjectViewProps> = ({title, description, scope, t
 
 const MinimalProjectView: FC<MinimalProjectViewProps> = ({scope, teamSize}, ref) => {
     return (<div className="d-flex flex-row">
-        <div ref={ref} className="block"/>
+        <ObserverableDiv ref={ref}/>
         <div className="d-flex flex-column">
             <div className="we-detail">{scope}</div>
             <div className="we-detail">Team size: {teamSize}</div>

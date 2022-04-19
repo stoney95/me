@@ -1,6 +1,7 @@
 import { RefObject } from "react";
 import {ArrowContainerHandle} from "./Arrow";
-import {ProjectViewProps} from "./Project"
+import {ProjectViewProps} from "./Project";
+import {type ObserverableDiv} from "./Project/ObserverableDiv";
 
 
 export type WorkExperience = {
@@ -17,7 +18,7 @@ export type ProjectState = {
 }
 
 export type ArrowRefs = {
-    source: RefObject<HTMLDivElement>;
+    source: RefObject<ObserverableDiv>;
     target: RefObject<HTMLDivElement>;
     arrow: RefObject<ArrowContainerHandle>;
 }

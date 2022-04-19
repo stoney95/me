@@ -1,5 +1,6 @@
 import {FC, RefObject} from "react";
 import Project, {ProjectViewProps} from "../Project";
+import {ObserverableDiv} from "../Project/ObserverableDiv";
 import {Droppable, Draggable} from "react-beautiful-dnd";
 
 import "./ExtendedProjects.scss";
@@ -27,7 +28,7 @@ const getDroppableClassName = (isDraggingOver: boolean): string => {
     return className;
 }
 
-const ExtendedProject = (props: ProjectViewProps, index: number, ref: RefObject<HTMLDivElement> | undefined) => {
+const ExtendedProject = (props: ProjectViewProps, index: number, ref: RefObject<ObserverableDiv> | undefined) => {
     return (
         <Droppable key={index} droppableId={`${index}`}>
             {(provided, droppableSnapshot) => (
@@ -56,6 +57,7 @@ const ExtendedProject = (props: ProjectViewProps, index: number, ref: RefObject<
                     </div>
                 )}
                 </Draggable>
+                {provided.placeholder}
             </div>
             )}
         </Droppable>

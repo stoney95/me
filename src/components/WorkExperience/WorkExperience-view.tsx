@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import {
     DragDropContext,
     type DropResult,
+    type DragUpdate
 } from "react-beautiful-dnd";
 
 import Timeline from "./Timeline";
@@ -63,6 +64,17 @@ const WorkExperienceView: FC<WorkExperienceProps> = ({projects: initialProjects,
 
         setProjects(newProjects);
         setExtendedProjects(newExtendedProjects);
+
+        const ref = arrowRefs.get(source.droppableId)
+
+        ref?.arrow.current?.updateArrow()
+    }
+
+    function onDragUpdate(event: DragUpdate) {
+        const draggableId = event.draggableId
+        const ref = arrowRefs.get(draggableId)
+
+        ref?.arrow.current?.updateArrow()
     }
 
     useEffect(() => {
@@ -73,7 +85,7 @@ const WorkExperienceView: FC<WorkExperienceProps> = ({projects: initialProjects,
     const extendedProjectPropsList = extendedProjects.map(project => project.projectProps)
 
     return <div className="d-flex flex-column">
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate} onDragStart={onDragUpdate}>
             <DraggableProjects projects={projectPropsList} arrowRefs={arrowRefs}/>
             <Timeline dates={dates} arrowRefs={arrowRefs}/>
             <ExtendedProjects projects={extendedProjectPropsList} arrowRefs={arrowRefs}/>

@@ -1,5 +1,6 @@
 import {createRef, FC} from 'react';
 import { ArrowContainerHandle } from './Arrow';
+import {type ObserverableDiv} from './Project/ObserverableDiv';
 import {ArrowRefs} from "./types"
 
 import {default as WorkExperienceView} from "./WorkExperience-view";
@@ -78,7 +79,7 @@ const WorkExperienceContainer: FC = () => {
 
     projects.map(project => 
         arrowRefs.set(project.projectProps.title, {
-            source: createRef<HTMLDivElement>(),
+            source: createRef<ObserverableDiv>(),
             target: createRef<HTMLDivElement>(),
             arrow: createRef<ArrowContainerHandle>(),
         })
