@@ -1,0 +1,41 @@
+.block {
+    background-color: #1C6455;
+    width: 5px;
+    margin-right: 10px;
+}
+
+.we-detail {
+    background-color: #1C6455;
+    color: white;
+    border-radius: 50px;
+    margin: 5px;
+    padding: 3px 5px 3px 5px;
+    word-wrap: normal;
+    line-height: 1.0;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.outer-circle {
+    stroke: #1C6455;
+    stroke-width: 10;
+    fill: none;
+}
+
+.outer-circle-svg {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.animation-box {
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    cursor: none;
+}

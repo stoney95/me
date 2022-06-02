@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 
 import Header from '../Header'
@@ -10,6 +10,7 @@ import SkillsPlane from '../SkillsPlane';
 import CrossSectionSkills from '../CrossSectionSkills'
 import WorkExperience from '../WorkExperience'
 
+import { MousePositionProvider } from '../../context/cursor/mousePosition';
 
 const skills = [
   {
@@ -42,23 +43,25 @@ const skills = [
 
 function App() {
   return (
-    <div className="App d-flex flex-column align-items-center">
-      <Header />
-      <Content>
-        <Container>
-          <PersonInfo />
-        </Container>
-        <TiteledContainer title="Skills">
-          <SkillsPlane/>
-        </TiteledContainer>
-        <TiteledContainer title="Cross Section Skills">
-          <CrossSectionSkills skills={skills}/>
-        </TiteledContainer>
-        <Container>
-          <WorkExperience />
-        </Container>
-      </Content>
-    </div>
+    <MousePositionProvider>
+      <div className="App d-flex flex-column align-items-center">
+        <Header />
+        <Content>
+          <Container>
+            <PersonInfo />
+          </Container>
+          <TiteledContainer title="Skills">
+            <SkillsPlane/>
+          </TiteledContainer>
+          <TiteledContainer title="Cross Section Skills">
+            <CrossSectionSkills skills={skills}/>
+          </TiteledContainer>
+          <Container>
+            <WorkExperience />
+          </Container>
+        </Content>
+      </div>
+    </MousePositionProvider>
   );
 }
 

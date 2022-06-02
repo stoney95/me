@@ -1,16 +1,15 @@
-import { FC, useEffect, useState } from "react";
-import {
-    DragDropContext,
-    type DropResult,
-    type DragUpdate
-} from "react-beautiful-dnd";
+import { FC, useEffect, useLayoutEffect, useState } from "react";
 
 import Timeline from "./Timeline";
-import DraggableProjects from './DraggableProjects';
-import ExtendedProjects from './ExtendedProjects';
 import Arrow, {ArrowContainerHandle} from './Arrow';
 
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+
 import {WorkExperience, ArrowRefs} from "./types"
+import ProjectList from "./ProjectList";
+import ExtendedProject from "./ExtendedProject";
+import ProjectDragLayer from "./ProjectDragLayer";
 
 interface WorkExperienceProps {
     projects: Array<WorkExperience>
@@ -21,82 +20,65 @@ const compareDates = (date1: {year: number; month: number}, date2: {year: number
     return (date1.year - date2.year) * 100 + (date1.month - date2.month)
 }
 
-const WorkExperienceView: FC<WorkExperienceProps> = ({projects: initialProjects, arrowRefs}) => {
-    const _projects = new Array<WorkExperience>()
-    const _extendedProjects = new Array<WorkExperience>()
-
-    initialProjects.map((project) => {
-        project.projectProps.extended ? _extendedProjects.push(project) : _projects.push(project);
-    })
-
-    const dates = initialProjects.map((project) => ({
+const WorkExperienceView: FC<WorkExperienceProps> = ({projects, arrowRefs}) => {
+    const dates = projects.map((project) => ({
         date: project.date,
         title: project.projectProps.title
     }));
 
-    _projects.sort((a, b) => compareDates(a.date, b.date));
-    _extendedProjects.sort((a, b) => compareDates(a.date, b.date));
+    projects.sort((a, b) => compareDates(a.date, b.date));
 
-    const [projects, setProjects] = useState(_projects);
-    const [extendedProjects, setExtendedProjects] = useState(_extendedProjects);
+    const upperProjects = projects.slice(0,3)
+    const lowerProjects = projects.slice(3, projects.length)
 
-    function onDragEnd(result: DropResult) {
-        const { source, destination } = result;
-    
-        if (!destination) {
-          return;
+    const [extendedProject, setExtendedProject] = useState(projects[0]);
+    const [dragLayerPosition, setDragLayerPosition] = useState({x: -1, y: -1})
+
+    const changeProject = (title: string) => {
+        const project = projects.find((project) => project.projectProps.title === title);
+        if (typeof project !== "undefined") {
+            setExtendedProject(project);
         }
-        const dInd = +destination.droppableId;
-
-        const itemToExtend = projects.splice(source.index, 1)[0];
-        const itemToShrink = extendedProjects.splice(dInd, 1)[0];
-        itemToExtend.projectProps.extended = true;
-        itemToShrink.projectProps.extended = false;
-
-        const newProjects = [...projects]
-        const newExtendedProjects = [...extendedProjects]
-
-        newProjects.push(itemToShrink);
-        newExtendedProjects.push(itemToExtend);
-
-        newProjects.sort((a, b) => compareDates(a.date, b.date));
-        newExtendedProjects.sort((a, b) => compareDates(a.date, b.date));
-
-        setProjects(newProjects);
-        setExtendedProjects(newExtendedProjects);
-
-        const ref = arrowRefs.get(source.droppableId)
-
-        ref?.arrow.current?.updateArrow()
     }
 
-    function onDragUpdate(event: DragUpdate) {
-        const draggableId = event.draggableId
-        const ref = arrowRefs.get(draggableId)
-
-        ref?.arrow.current?.updateArrow()
-    }
-
-    useEffect(() => {
+    useLayoutEffect(() => {
         arrowRefs.forEach((refs => refs.arrow.current?.updateArrow()))
-    }, [projects, extendedProjects])
+    }, [projects, extendedProject])
 
-    const projectPropsList = projects.map(project => project.projectProps)
-    const extendedProjectPropsList = extendedProjects.map(project => project.projectProps)
+    const upperProjectPropsList = upperProjects.map(project => project.projectProps)
+    const lowerProjectPropsList = lowerProjects.map(project => project.projectProps)
+    const extendedProjectProps = extendedProject.projectProps;
+    const extendedProjectRefs = arrowRefs.get(extendedProjectProps.title);
 
     return <div className="d-flex flex-column">
-        <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate} onDragStart={onDragUpdate}>
-            <DraggableProjects projects={projectPropsList} arrowRefs={arrowRefs}/>
-            <Timeline dates={dates} arrowRefs={arrowRefs}/>
-            <ExtendedProjects projects={extendedProjectPropsList} arrowRefs={arrowRefs}/>
-        </DragDropContext>
-        {Array.from(arrowRefs.values()).map(refs => (
+        <DndProvider backend={HTML5Backend}>
+            <div className="d-flex flex-row">
+                <div className="d-flex flex-column" style={{width: "100%"}}>
+                    <ProjectList projects={lowerProjectPropsList} arrowRefs={arrowRefs} setDragLayerPosition={setDragLayerPosition}/>
+                    <Timeline dates={dates} arrowRefs={arrowRefs}/>
+                    <ProjectList projects={upperProjectPropsList} arrowRefs={arrowRefs} setDragLayerPosition={setDragLayerPosition}/>
+                </div>
+                <ExtendedProject 
+                    project={extendedProject.projectProps} 
+                    arrowRefs={arrowRefs}
+                    onDrop={changeProject}
+                    dragLayerPosition={dragLayerPosition}
+                />
+            </div>
+            <ProjectDragLayer />
+        </DndProvider>
+        {Array.from(arrowRefs.entries())
+            .map(([key, refs]) => (
             <Arrow 
                 source={refs.source}
                 target={refs.target}
-                ref={refs.arrow}
-            />
-        ))}
+                />
+                ))}
+        {/* {extendedProjectRefs ? <Arrow
+            source={extendedProjectRefs.source}
+            target={extendedProjectRefs.extendedSource}
+            ref={extendedProjectRefs.arrow}
+        /> : null} */}
     </div>
 }
 

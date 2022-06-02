@@ -1,0 +1,15 @@
+.drag-layer-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    background-color: #1C6455;
+}
+
+.drag-layer-container {
+    position: fixed;
+    pointer-events: 'none';
+    z-index: 100;
+    left: 0;
+    top: 0;
+    cursor: none;
+}

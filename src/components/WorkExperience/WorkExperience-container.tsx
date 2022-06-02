@@ -25,7 +25,7 @@ const projects = [
             description: "The projects was shit but I did very well",
             scope: "ETL",
             teamSize: 15,
-            extended: true,
+            extended: false,
         },
         date: {
             year: 2020,
@@ -51,7 +51,7 @@ const projects = [
             description: "I did not know what I was supposed to do there",
             scope: "Timeseries Forecasting",
             teamSize: 9,
-            extended: true,
+            extended: false,
         },
         date: {
             year: 2019,
@@ -80,6 +80,7 @@ const WorkExperienceContainer: FC = () => {
     projects.map(project => 
         arrowRefs.set(project.projectProps.title, {
             source: createRef<ObserverableDiv>(),
+            extendedSource: createRef<ObserverableDiv>(),
             target: createRef<HTMLDivElement>(),
             arrow: createRef<ArrowContainerHandle>(),
         })

@@ -1,0 +1,26 @@
+.extended-project {
+    width: 30%;
+    padding: 30px 0px 30px 0px;
+    height: 300px;
+    margin: 5px;
+}
+
+.dragging-over {
+    background-color: #EBEBEB;
+    border: 2px dashed #ccc;
+}
+
+.animation-container {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.circle-animation {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background-color: #1C6455;
+    transform: translate(-50%, -50%);
+}

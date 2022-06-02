@@ -19,6 +19,11 @@ export type ProjectState = {
 
 export type ArrowRefs = {
     source: RefObject<ObserverableDiv>;
+    extendedSource: RefObject<ObserverableDiv>;
     target: RefObject<HTMLDivElement>;
     arrow: RefObject<ArrowContainerHandle>;
+}
+
+export const ItemTypes = {
+    PROJECT: 'project'
 }

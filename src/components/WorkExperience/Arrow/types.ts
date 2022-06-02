@@ -7,12 +7,23 @@ export type ArrowDeltas = {
     absDy: number
 }
 
+export type Curve = {
+    radius: number,
+    startPoint: Point,
+    dx: number,
+    dy: number,
+    direction: number
+}
+
 export type BezierPoints = {
     p1: Point,
     p2: Point,
     p3: Point,
     p4: Point,
     p5: Point,
+    p6: Point,
+    c1: Curve,
+    c2: Curve,
 }
 
 

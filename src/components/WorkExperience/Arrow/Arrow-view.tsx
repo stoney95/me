@@ -29,30 +29,56 @@ const calculateControlPoints = ({absDx, absDy, dx, dy}: ArrowDeltas): BezierPoin
     if (dx < 0) [startPointX, endPointX] = [endPointX, startPointX];
     if (dy < 0) [startPointX, endPointX] = [endPointX, startPointX];
 
-    const fixedLineInflectionConstant = Math.min(50, absDy);
-  
+    const yFactor = dy / absDy;
+    const xFactor = dx / absDx * yFactor;
+    let offset = 10;
+    const remainingDy = absDy - 2 * offset;
+    const minDelta = Math.min(absDx, remainingDy);
+    const curveRadius = Math.min(50, minDelta / 2);
+
+    const yGap = absDy - 2 * offset - 2 * curveRadius;
+    offset += yGap / 2;
+
     const p1 = {
         x: startPointX,
         y: startPointY,
     };
     const p2 = {
-        x: startPointX,
-        y: endPointY - fixedLineInflectionConstant,
+        x: p1.x,
+        y: p1.y + offset,
+    }
+    const c1 = {
+        startPoint: p2,
+        radius: curveRadius,
+        dx: curveRadius * xFactor,
+        dy: curveRadius,
+        direction: xFactor > 0 ? 0 : 1
     }
     const p3 = {
-        x: startPointX,
-        y: endPointY,
+        x: p2.x + curveRadius * xFactor,
+        y: p2.y + curveRadius,
     };
     const p4 = {
-        x: endPointX,
-        y: endPointY - fixedLineInflectionConstant,
+        x: endPointX - curveRadius * xFactor,
+        y: endPointY - offset - curveRadius,
     };
+    const c2 = {
+        startPoint: p4,
+        radius: curveRadius,
+        dx: curveRadius * xFactor,
+        dy: curveRadius,
+        direction: xFactor > 0 ? 1 : 0
+    }
     const p5 = {
+        x: endPointX,
+        y: endPointY - offset,
+    };
+    const p6 = {
         x: endPointX,
         y: endPointY,
     };
   
-    return { p1, p2, p3, p4, p5 };
+    return { p1, p2, p3, p4, p5, p6, c1, c2 };
 };
 
 const ArrowView: FC<ArrowViewProps> = ({startPoint, endPoint}) => {
@@ -67,7 +93,7 @@ const ArrowView: FC<ArrowViewProps> = ({startPoint, endPoint}) => {
     const canvasHeight = Math.abs(endPoint.y - startPoint.y);
 
     const deltas = calculateDeltas(startPoint, endPoint)
-    const {p1, p2, p3, p4, p5} = calculateControlPoints(deltas)
+    const {p1, p2, p3, p4, p5, p6, c1, c2} = calculateControlPoints(deltas)
     
     return (
         <svg
@@ -84,13 +110,11 @@ const ArrowView: FC<ArrowViewProps> = ({startPoint, endPoint}) => {
                 strokeWidth={strokeWidth}
                 fill="none"
                 d={`
-                M 
-                    ${p1.x + strokeWidth}, ${p1.y} 
-                    ${p2.x + strokeWidth}, ${p2.y} 
-                C 
-                    ${p3.x + strokeWidth}, ${p3.y} 
-                    ${p4.x + strokeWidth}, ${p4.y} 
-                    ${p5.x + strokeWidth}, ${p5.y} 
+                M ${p1.x}, ${p1.y} L ${p2.x}, ${p2.y} 
+                a ${c1.radius},${c1.radius} 0 0,${c1.direction} ${c1.dx}, ${c1.dy}  
+                M ${p3.x}, ${p3.y} L ${p4.x}, ${p4.y} 
+                a ${c2.radius},${c2.radius} 0 0,${c2.direction} ${c2.dx}, ${c2.dy} 
+                M ${p5.x}, ${p5.y} L ${p6.x}, ${p6.y} 
                 `} 
             />
         </svg>
