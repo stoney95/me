@@ -15,12 +15,12 @@ export const MousePositionProvider: React.FC = ({children}) => {
     };
 
     useEffect(() => {        
-        window.addEventListener('dragover', handleWindowMouseMove);
-        window.addEventListener('mousemove', handleWindowMouseMove);
+        document.addEventListener('dragover', handleWindowMouseMove);
+        document.addEventListener('mousemove', handleWindowMouseMove);
 
         return () => {
-            window.removeEventListener('dragover', handleWindowMouseMove);
-            window.removeEventListener('mousemove', handleWindowMouseMove);
+            document.removeEventListener('dragover', handleWindowMouseMove);
+            document.removeEventListener('mousemove', handleWindowMouseMove);
         };
     }, []);
     

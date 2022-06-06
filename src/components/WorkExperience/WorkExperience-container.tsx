@@ -4,6 +4,7 @@ import {type ObserverableDiv} from './Project/ObserverableDiv';
 import {ArrowRefs} from "./types"
 
 import {default as WorkExperienceView} from "./WorkExperience-view";
+import {ProjectHoverProvider} from "../../context/cursor/hoverProject"
 
 
 const projects = [
@@ -86,7 +87,9 @@ const WorkExperienceContainer: FC = () => {
         })
     )
 
-    return <WorkExperienceView projects={projects} arrowRefs={arrowRefs}/>;
+    return <ProjectHoverProvider>
+        <WorkExperienceView projects={projects} arrowRefs={arrowRefs}/>;
+    </ProjectHoverProvider>
 }
 
 export default WorkExperienceContainer;

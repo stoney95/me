@@ -1,4 +1,4 @@
-import {createRef, FC, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {createRef, FC, useContext, useEffect, useLayoutEffect, useRef, useState} from "react";
 import { DropTargetMonitor, useDrop } from "react-dnd";
 
 import {motion} from "framer-motion"
@@ -7,6 +7,8 @@ import useMousePosition from "../../../hooks/useMousePosition"
 import Project, { ProjectViewProps } from "../Project";
 import {ArrowRefs, ItemTypes} from "../types";
 import "./ExtendedProject.scss";
+import { ProjectHover } from "../../../context/cursor/hoverProject";
+import useBoundingBox, { useElementOffset } from "../../../hooks/useBoundingBox";
 
 interface ExtendedProjectProps {
     project: ProjectViewProps;
@@ -18,59 +20,72 @@ interface ExtendedProjectProps {
 const ExtendedProjectView: FC<ExtendedProjectProps> = ({project, arrowRefs, onDrop, dragLayerPosition}) => {
     const [containerOffset, setContainerOffset] = useState({x: 0, y: 0})
     const container = createRef<HTMLDivElement>()
+    const {hover} = useContext(ProjectHover)
     
-    const [{ canDrop, isOver, itemType, item, didDrop }, drop] = useDrop(() => ({
+    const [{ isOver, isDragging }, drop] = useDrop(() => ({
         accept: ItemTypes.PROJECT,
         drop: (item: ProjectViewProps, monitor: DropTargetMonitor<ProjectViewProps, void>) => {
             onDrop(item.title);
         },
         collect: monitor => ({
-            canDrop: !!monitor.canDrop(),
             isOver: !!monitor.isOver(),
-            itemType: monitor.getItemType(),
-            item: monitor.getItem(),
-            didDrop: monitor.didDrop()
+            isDragging: monitor.getClientOffset() !== null,
         }),
     }))
 
-    const updateBoundingBox = () => {
-        const containerElem = container.current;
-        const boundingBox = containerElem?.getBoundingClientRect();
-
-        if(boundingBox) {
-            setContainerOffset({
-                x: boundingBox.left,
-                y: boundingBox.top
-            })
-        }
-    }
-
-    useEffect(() => {
-        updateBoundingBox();
-        document.addEventListener("scroll", updateBoundingBox);
-        document.addEventListener("resize", updateBoundingBox);
-
-        return () => {
-            document.removeEventListener("scroll", updateBoundingBox);
-            document.removeEventListener("resize", updateBoundingBox);
-        }
-    }, [])
+    const boundingBox = useBoundingBox(container);
+    // const elementOffset = useElementOffset(container);
 
     
     const ref = arrowRefs.get(project.title)?.extendedSource;
     project.extended = true;
     
     let className = "extended-project";
-    if (isOver) className += " dragging-over";
-    
-    const animationOffset = {
-        x: dragLayerPosition.x - containerOffset.x,
-        y: dragLayerPosition.y - containerOffset.y
-    };
+    // if (isOver) className += " dragging-over";
+    // if (hover) className += " project-hovered"
 
-    console.log(animationOffset)
+    const variants = {
+        standard: {
+            opacity: 0,
+            height: "100%",
+        },
+        onDrag: {
+            height: "100%",
+            opacity: 1,
+            backgroundColor: "rgba(0, 0, 255, 0.3)",
+            border: "2px dashed blue",
+        },
+        onHover: {
+            opacity: 1,
+            height: "100%",
+            backgroundColor: "#EBEBEB",
+            border: "2px dashed #ccc",
+        }
+    }
+
+    let variant = "standard";
+    if (hover) variant = "onDrag";
+    if (isDragging) variant = "onDrag";
+    if (isOver) variant = "onHover";
+
+    const animationOffset = {
+        x: dragLayerPosition.x - boundingBox.x,
+        y: dragLayerPosition.y - boundingBox.y
+    };
+    // const animationOffset = {
+    //     x: elementOffset.x,
+    //     y: elementOffset.y
+    // };
 
     return <div ref={drop} className={className}>
+        <motion.div 
+            className="curtain-animation"
+            variants={variants}
+            animate={variant}
+            transition={{
+                duration: 0.2,
+            }}
+        />
         <div ref={container} className="animation-container">
             {isOver? null : Project(project, ref)}
             {true ? 

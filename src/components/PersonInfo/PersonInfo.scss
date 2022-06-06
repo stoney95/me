@@ -34,14 +34,14 @@ $width: 200px;
     .outer-border {
         @include picture($width, 12px);
         @include center;
-        background-color: #1C6455;
+        background-color: black;
     }
 
     .details-box {
         width: 100%;
 
         .name-box {
-            background-color: #1C6455;
+            background-color: black;
             color: #fff;
             height: $width / 2;
             transform: translateX(-$width / 2);

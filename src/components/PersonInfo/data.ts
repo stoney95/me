@@ -22,4 +22,4 @@ export const details = [
     },
 ]
 
-export const shortDescription = "Data generalist ❤️ python, data, projects, automation  🤓 glad to learn something new every day  🔨 building productive ML systems and end-to-end data products"
+export const shortDescription = "Data generalist ❤️ python, data, machine learning, automation   🔨 building productive ML systems and end-to-end data products 🤓 glad to learn something new every day"

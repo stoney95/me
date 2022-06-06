@@ -10,9 +10,11 @@ export default function useMousePosition() {
 
   useEffect(() => {
     document.addEventListener("mousemove", mouseMoveHandler);
+    document.addEventListener("dragover", mouseMoveHandler);
 
     return () => {
       document.removeEventListener("mousemove", mouseMoveHandler);
+      document.removeEventListener("dragover", mouseMoveHandler);
     };
   }, []);
 

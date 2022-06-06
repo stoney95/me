@@ -17,7 +17,11 @@ interface ProjectListProps {
 }
 
 
-const DraggableProject = (props: ProjectViewProps, ref: RefObject<ObserverableDiv> | undefined, setDragLayerPosition: (position: XYCoord) => void) => {
+const DraggableProject = (
+    props: ProjectViewProps, 
+    ref: RefObject<ObserverableDiv> | undefined, 
+    setDragLayerPosition: (position: XYCoord) => void,
+) => {
     const mousePosition = useContext(MousePosition);
 
     const [{ isDragging }, drag, preview] = useDrag(() => ({
@@ -34,7 +38,7 @@ const DraggableProject = (props: ProjectViewProps, ref: RefObject<ObserverableDi
     }))
     
     useEffect(() => {
-        preview(getEmptyImage(), { captureDraggingState: true })
+        preview(getEmptyImage(), { captureDraggingState: false })
     }, [])
 
     return <div 
